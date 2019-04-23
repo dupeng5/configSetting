@@ -1,0 +1,42 @@
+server.port: 8081
+
+spring:
+  datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/mybatis?serverTimezone=GMT%2B8
+      username: mysql
+      password: mysql
+  #redis 缓存配置
+  redis:
+    cluster:
+      nodes: 192.168.230.128:7001,192.168.230.128:7001,192.168.230.128:7002,192.168.230.128:7003,192.168.230.128:7004,192.168.230.128:7005,192.168.230.128:7006
+      max-redirects: 6
+#    password: redis
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: 5s
+        min-idle: 1
+    timeout:  5s
+mybatis-plus:
+#  mapper-locations: classpath:/mapper/*.xml
+# type-aliases-package: com.example.mybatis.entity.*.entity
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      #驼峰下划线转换
+      column-underline: true
+      #逻辑删除配置
+      logic-delete-value: 0
+      logic-not-delete-value: 1
+      db-type: mysql    #oracle
+    refresh: false
+  configuration:
+      map-underscore-to-camel-case: true
+      cache-enabled: false
+#      jdbc-type-for-null: 'null'    #oracle数据源下添加属性
+#指定日志配置文件
+logging:
+  config: classpath:logback-dev.xml
